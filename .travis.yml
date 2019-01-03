@@ -1,1 +1,21 @@
 language: scala
+
+before_install:
+
+jobs:
+  include:
+    - stage: test
+      script: sbt test
+    - stage: publish
+      script: openssl aes-256-cbc -K $encrypted_4efad032cfcf_key -iv $encrypted_4efad032cfcf_iv -in .travis/private.key.enc -out .travis/private.key -d && gpg --allow-secret-key-import --import .travis/private.key .travis/public.key && sbt publish
+
+stages:
+  - name: test
+  - name: publish
+    if: tag =~ ^v
+
+env:
+  global:
+    - BINTRAY_USER=raboofje
+    # encrypt with: travis encrypt BINTRAY_PASS=...
+    - secure: "FindO4psRsT/QzhoQWDcfIw7xX2kXEJdJ+UxMHWBbMN4gWTwdrUnyzMyoQwhkXrE7aovO043qPIRdcolvoaO0be0hW/k4jjXUHeheedDcap3A10WAxhOn7Yy0Z1T1A4sHFenz3py1xUOsKEtyBN/BwWhCg/LhQiR+egvR9XP66Un55zf1IP2fd69ipksrQ4uoI42uYrqWIsLfBGVOdchkbqgF9DwqB1Hx7GFYfB1gUxoZLbupccweYej8wn4GBcJOZeMa3ri8jjoVn7F+r+g0QXryEKILgeYqSHDlfsVrxb/sOhUwiAlS3kTa3+ee4epEDZa0YfkD/K6peFad/nakqAmMAmppFhUMcWsX+Ppyzri9PnsKnN4MHX8QLcQrlx6edjaRG7MjPg5Ycs34QMsGXLOIKkVcUExeRymytYgIZ3QlNP+lqF6HrMvetDCKCl3XY/RNp/IOdYlfobHSJe0r18BjEXDgQlOpYsUQ+tcp3fFJ/55i9oV0tAo8Bdv2qWzrQAP+T4O2vxNTUCRfcwTa7hLoutxL4uJecYle9wXB1LUYuHnFHzcHIY2pKHY7idTjFjEj4U699mjAbvo0NN6xSgIp3Q8zKOezdcNWJ7emYroWZN75evpeQrAN2J3A22Rv9pDuIHNKIy1h33V7cckOB2psbpHSYCLG/MdbaUl10w="
