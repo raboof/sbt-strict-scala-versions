@@ -6,7 +6,7 @@ Ensures sbt is only started with Scala versions that are allowed by the build
 
 Simply add the plugin to your `project/plugins.sbt`:
 
-    addSbtPlugin("net.bzzt" % "sbt-reproducible-builds" % "<current_version>")
+    addSbtPlugin("net.bzzt" % "sbt-strict-scala-versions" % "0.0.1")
 
 ## Behavior
 
