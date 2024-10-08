@@ -2,6 +2,8 @@
 
 Ensures sbt is only started with Scala versions that are allowed by the build
 
+No longer needed since https://github.com/sbt/sbt/issues/7327
+
 ## Usage
 
 Simply add the plugin to your `project/plugins.sbt`:
